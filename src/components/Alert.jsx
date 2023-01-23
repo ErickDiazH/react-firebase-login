@@ -1,6 +1,8 @@
-const Alert = props => {
+const Alert = ({message}) => {
     return (
-        <h1>Alert</h1>
+        <div>
+            <span>{message}</span>
+        </div>
     )
 }
 

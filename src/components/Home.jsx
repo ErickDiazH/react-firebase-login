@@ -3,7 +3,11 @@ import { useAuth } from "../context/authContext";
 const Home = props => {
     const { user, logout, isLoading } = useAuth()
     const handleLogout = async () => {
-        await logout()
+        try {
+            await logout()
+        } catch (error) {
+            console.error(error)
+        }
     }
     if(isLoading) return <h1>loading...</h1>
     return (
