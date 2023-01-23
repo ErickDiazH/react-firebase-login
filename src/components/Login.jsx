@@ -9,7 +9,7 @@ const Login = (props) => {
     password: "",
   });
 
-  const { login, loginWithGoogle } = useAuth();
+  const { login, loginWithGoogle, resetPassword } = useAuth();
   const navigate = useNavigate();
 
   const [error, setError] = useState();
@@ -37,6 +37,16 @@ const Login = (props) => {
       setError(error.message);
     }
   };
+
+  const handleResetPassword = async () => {
+    if(!user.email) return setError("Please enter your email");
+    try {
+      await resetPassword(user.email)
+      setError('We sent you and email with a link to reset your password')
+    } catch (error) {
+      setError(error.message)
+    }
+  }
 
   return (
     <div className="w-full max-w-xs m-auto">
@@ -76,9 +86,18 @@ const Login = (props) => {
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
         </div>
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-sm">
-          Login
-        </button>
+        <div className="flex items-center justify-between">
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-sm">
+            Login
+          </button>
+          <a
+            href="#"
+            className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+            onClick={handleResetPassword}
+          >
+            Forgot Password?
+          </a>
+        </div>
       </form>
       <p className="my-4 text-sm flex justify-between px-2">
         Don't have an account? <Link to="/register">Register</Link>
