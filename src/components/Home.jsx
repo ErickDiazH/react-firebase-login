@@ -1,10 +1,16 @@
 import { useAuth } from "../context/authContext";
 
 const Home = props => {
-    const {user} = useAuth()
-    console.log("🚀 ~ file: Home.jsx:5 ~ Home ~ user", user)
+    const { user, logout, isLoading } = useAuth()
+    const handleLogout = async () => {
+        await logout()
+    }
+    if(isLoading) return <h1>loading...</h1>
     return (
-        <h1>Home</h1>
+        <div>
+            <h1>Welcome {user?.email}</h1>
+            <button onClick={handleLogout}>logout</button>
+        </div>
     )
 }
 
